@@ -1,0 +1,19 @@
+name: Debugging podman
+# Make sure only one action triggers the job, otherwise pushing to a
+# pull-request will run it twice.
+on:
+  pull_request:
+    branches:
+      - "*"
+  push:
+    branches:
+      - master
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Clone Repository"
+        uses: actions/checkout@v3
+      - name: Run tests in podman
+        run: make test-in-podman
