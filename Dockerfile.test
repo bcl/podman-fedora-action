@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora:rawhide
+FROM quay.io/fedora/fedora:39
 COPY test-packages .
 RUN dnf -y install $(cat test-packages) && touch /.in-container
 RUN useradd weldr
