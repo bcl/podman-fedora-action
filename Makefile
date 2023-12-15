@@ -116,9 +116,12 @@ local-srpm: local $(PKGNAME).spec
 	  lorax.spec
 
 test-in-copy:
-	rsync -a --exclude=.git /lorax-ro/ /lorax/
+	id
 	ls -l /lorax-ro/
+	ls -ld /lorax-ro/.github
+	rsync -a --exclude=.git /lorax-ro/ /lorax/
 	ls -l /lorax/
+	ls -l /lorax/.github
 
 test-in-docker: test-in-podman
 
