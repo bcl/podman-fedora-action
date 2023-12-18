@@ -117,11 +117,14 @@ local-srpm: local $(PKGNAME).spec
 
 test-in-copy:
 	id
+	mount
 	ls -l /lorax-ro/
 	ls -ld /lorax-ro/.github
-	rsync -a --exclude=.git /lorax-ro/ /lorax/
+	grep ^Cap /proc/self/status
+	mkdir /lorax; touch /lorax/foo; chown 0:0 /lorax/foo; chmod 700 /lorax/foo
+##	rsync -a --exclude=.git /lorax-ro/ /lorax/
 	ls -l /lorax/
-	ls -l /lorax/.github
+##	ls -l /lorax/.github
 
 test-in-docker: test-in-podman
 
