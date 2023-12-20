@@ -122,7 +122,7 @@ test-in-copy:
 	ls -ld /lorax-ro/.github
 	grep ^Cap /proc/self/status
 ##	mkdir /lorax; touch /lorax/foo; chown 0:0 /lorax/foo; chmod 700 /lorax/foo
-	strace rsync -a --exclude=.git /lorax-ro/ /lorax/
+	strace -f -s 1000 rsync -a --exclude=.git /lorax-ro/ /lorax/
 	ls -l /lorax/
 ##	ls -l /lorax/.github
 
