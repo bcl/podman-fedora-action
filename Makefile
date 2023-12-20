@@ -134,7 +134,7 @@ test-in-podman:
 	$(DOCKER) run --rm -v `pwd`/.test-results/:/test-results \
 		-v `pwd`:/lorax-ro:ro --security-opt label=disable \
 		--env RUN_TESTS="$(RUN_TESTS)" \
-		--cap-add CAP_SYS_PTRACE \
+		--security-opt seccomp=unconfined --cap-add CAP_SYS_PTRACE \
 		welder/lorax-tests:$(IMAGE_RELEASE) make test-in-copy
 
 docs-in-docker: docs-in-podman
