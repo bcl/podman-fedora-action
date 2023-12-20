@@ -116,9 +116,15 @@ local-srpm: local $(PKGNAME).spec
 	  lorax.spec
 
 test-in-copy:
-	rsync -a --exclude=.git /lorax-ro/ /lorax/
+	id
+	mount
 	ls -l /lorax-ro/
+	ls -ld /lorax-ro/.github
+	grep ^Cap /proc/self/status
+##	mkdir /lorax; touch /lorax/foo; chown 0:0 /lorax/foo; chmod 700 /lorax/foo
+	strace -f -s 1000 rsync -a --exclude=.git /lorax-ro/ /lorax/
 	ls -l /lorax/
+##	ls -l /lorax/.github
 
 test-in-docker: test-in-podman
 
@@ -128,6 +134,7 @@ test-in-podman:
 	$(DOCKER) run --rm -v `pwd`/.test-results/:/test-results \
 		-v `pwd`:/lorax-ro:ro --security-opt label=disable \
 		--env RUN_TESTS="$(RUN_TESTS)" \
+		--security-opt seccomp=unconfined --cap-add CAP_SYS_PTRACE \
 		welder/lorax-tests:$(IMAGE_RELEASE) make test-in-copy
 
 docs-in-docker: docs-in-podman
